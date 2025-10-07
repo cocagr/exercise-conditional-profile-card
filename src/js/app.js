@@ -23,34 +23,58 @@ import "../style/index.css";
     }
  */
 function render(variables = {}) {
-  console.log("These are the current variables: ", variables); // print on the console
-  // here we ask the logical questions to make decisions on how to build the html
-  // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
+  console.log("These are the current variables: ", variables);
+
+  // Si includeCover es false → portada vacía
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
-  if (variables.includeCover == false) cover = "<div class='cover'></div>";
+  if (variables.includeCover === false) cover = "<div class='cover'></div>";
+
+  // Nombre completo
+  let fullName =
+    (variables.name !== null ? variables.name : "Name") +
+    " " +
+    (variables.lastName !== null ? variables.lastName : "Last Name");
+
+  // Role
+  let role = variables.role !== null ? variables.role : "Your role";
+
+  // Ciudad y país
+  let location =
+    (variables.city !== null ? variables.city : "City") +
+    (variables.country !== null ? ", " + variables.country : "");
+
+  // Social links
+  let twitter = variables.twitter
+    ? `<li><a href="https://twitter.com/${variables.twitter}"><i class="fab fa-twitter"></i></a></li>`
+    : "";
+  let github = variables.github
+    ? `<li><a href="https://github.com/${variables.github}"><i class="fab fa-github"></i></a></li>`
+    : "";
+  let linkedin = variables.linkedin
+    ? `<li><a href="https://linkedin.com/${variables.linkedin}"><i class="fab fa-linkedin"></i></a></li>`
+    : "";
+  let instagram = variables.instagram
+    ? `<li><a href="https://instagram.com/${variables.instagram}"><i class="fab fa-instagram"></i></a></li>`
+    : "";
 
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
           <h1>${variables.name || "Name"} ${variables.lastName ||
-    ",Last Name"}</h1>
+    " Last name"}</h1>
           <h2>${variables.role || "Role"}</h2>
-          <h3>${variables.city + "," || "City, "} ${variables.country ||
-    "Country"}</h3>
-          <ul class="position-right">
-            <li><a href=${
-              variables.twitter
-            }><i class="fab fa-twitter"></i></a></li>
-            <li><a href=${
-              variables.github
-            }><i class="fab fa-github"></i></a></li>
-            <li><a href=${
-              variables.linkedin
-            }><i class="fab fa-linkedin"></i></a></li>
-            <li><a href=${
-              variables.instagram
-            }><i class="fab fa-instagram"></i></a></li>
+          <h3>${variables.city || "City"}, ${variables.country ||
+    "Country"} </h3>
+          <ul class="${variables.socialMediaPosition}">
+            <li><a href="https://twitter.com/${variables.twitter ||
+              "4geeksacademy"}"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://github.com/${variables.github ||
+              "4geeksacademy"}"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://linkedin.com/${variables.linkedin ||
+              "4geeksacademy"}"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="https://instagram.com/${variables.instagram ||
+              "4geeksacademy"}"><i class="fab fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
